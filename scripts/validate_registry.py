@@ -141,9 +141,16 @@ def validate_remote_plugin(plugin: dict) -> list[str]:
                     f"(strict mode). Add plugin.json or set strict: false in registry.yaml"
                 )
         # Check for at least one SKILL.md
-        skills_dir = plugin.get("skills_dir", "skills")
+        skills_dir_val = plugin.get("skills_dir", "skills")
+        skills_dir = Path(skills_dir_val)
+        resolved_skills_dir = (repo_path / skills_dir).resolve()
+        if skills_dir.is_absolute() or not resolved_skills_dir.is_relative_to(repo_path.resolve()):
+            errors.append(
+                f"  Plugin '{plugin['name']}': invalid skills_dir '{skills_dir_val}' escapes the repository root"
+            )
+            return errors
         skill_locations = [
-            repo_path / skills_dir,
+            resolved_skills_dir,
             repo_path / ".claude" / "skills",
             repo_path / "skills",
         ]
@@ -186,6 +193,7 @@ def main():
         print(f"  FAIL: {len(errors)} schema error(s)")
         for e in errors:
             print(e)
+        sys.exit(1)
     else:
         print("  OK")
 

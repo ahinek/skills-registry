@@ -12,8 +12,10 @@ Usage:
 import argparse
 import base64
 import json
+import shutil
 import subprocess
 import sys
+from urllib.parse import quote
 
 import yaml
 
@@ -30,11 +32,15 @@ def save_registry(registry: dict, path: str = "registry.yaml"):
 
 def fetch_remote_version(repo: str, ref: str = "main") -> str | None:
     """Fetch version from remote plugin.json via GitHub API."""
+    gh_bin = shutil.which("gh")
+    if not gh_bin:
+        return None
     result = subprocess.run(
-        ["gh", "api",
-         f"repos/{repo}/contents/.claude-plugin/plugin.json?ref={ref}",
+        [gh_bin, "api",
+         f"repos/{repo}/contents/.claude-plugin/plugin.json?ref={quote(ref, safe='')}",
          "--jq", ".content"],
         capture_output=True, text=True,
+        timeout=30,
     )
     if result.returncode != 0:
         return None
@@ -59,15 +65,18 @@ def main():
     updates = []
 
     for plugin in registry.get("plugins", []):
-        source = plugin["source"]
-        if source["type"] != "github":
+        source = plugin.get("source") or {}
+        if source.get("type") != "github":
             continue
 
         # Only check strict-mode plugins (they have their own plugin.json)
         if plugin.get("strict", True) is False:
             continue
 
-        repo = source["repo"]
+        repo = source.get("repo")
+        if not repo:
+            print(f"  SKIP: {plugin.get('name', '<unknown>')} (missing source.repo)")
+            continue
         current = plugin.get("version", "0.0.0")
         remote = fetch_remote_version(repo, source.get("ref", "main"))
 
@@ -100,6 +109,7 @@ def main():
     result = subprocess.run(
         [sys.executable, "scripts/sync_marketplace.py", "--registry", args.registry],
         capture_output=True, text=True,
+        timeout=60,
     )
     if result.returncode == 0:
         print(result.stdout.strip())
