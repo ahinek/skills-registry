@@ -34,6 +34,27 @@ Tags: rfe, rubric, quality, assessment
 /plugin install assess-rfe@opendatahub-skills
 ```
 
+### test-plan
+
+Generate test plans and test cases from RHOAI strategies using parallel sub-agent analysis and automated review.
+
+v0.1.0 | [fege/test-plan](https://github.com/fege/test-plan)
+
+Tags: test-plan, test-cases, quality, strategy
+
+| Skill | Description |
+|-------|-------------|
+| `/test-plan.create` | Generate a test plan from a strategy |
+| `/test-plan.create-cases` | Generate test case files from a test plan |
+| test-plan.analyze.endpoints | Extract scope and API endpoints |
+| test-plan.analyze.risks | Determine test levels, priorities, and risks |
+| test-plan.analyze.infra | Identify environment and infrastructure needs |
+| test-plan.review | Review test plan for completeness |
+
+```bash
+/plugin install test-plan@opendatahub-skills
+```
+
 ## Security Review
 
 Security analysis, threat modeling, and compliance review
