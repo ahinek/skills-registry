@@ -49,10 +49,6 @@ Tags: test-plan, test-cases, quality, strategy, review, scoring
 | `/test-plan.publish` | Publish test plan artifacts to GitHub with PR creation |
 | `/test-plan.resolve-feedback` | Assess and resolve PR review comments on test plans |
 | `/test-plan.score` | Score test plan quality using rubric without auto-revision |
-| test-plan.analyze.endpoints | Extract scope and API endpoints |
-| test-plan.analyze.risks | Determine test levels, priorities, NFRs, and risks |
-| test-plan.analyze.infra | Identify environment and infrastructure needs |
-| test-plan.review | Review test plan with 5-criteria rubric and auto-revision |
 
 ```bash
 /plugin install test-plan@opendatahub-skills
