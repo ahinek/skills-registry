@@ -407,6 +407,8 @@ plugins:
       type: github
       repo: ahinek/meeting-quality-skills
       ref: 058ef75e5e9f83872c8351ad7dcfe2798951128d
+    homepage: https://github.com/ahinek/meeting-quality-skills
+    repository: https://github.com/ahinek/meeting-quality-skills
     skills:
       - name: meeting-async-update-check
         description: Check a shared update doc and identify attendees missing async updates before a status meeting
