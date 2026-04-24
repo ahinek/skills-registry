@@ -207,6 +207,7 @@ Tags: meeting, google-workspace, agenda, async-updates, productivity
 | Skill | Description |
 |-------|-------------|
 | `/meeting-async-update-check` | Check a shared update doc and identify attendees missing async updates before a status meeting |
+| `/meeting-risk-agenda` | Analyze pre-meeting updates and generate a risk-focused agenda by identifying blocked and at-risk items |
 
 ```bash
 /plugin install meeting-quality-skills@opendatahub-skills

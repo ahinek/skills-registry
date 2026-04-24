@@ -406,12 +406,15 @@ plugins:
     source:
       type: github
       repo: ahinek/meeting-quality-skills
-      ref: 058ef75e5e9f83872c8351ad7dcfe2798951128d
+      ref: f39c944a31cad1ec6d57360f56ef28f04dd0ad78
     homepage: https://github.com/ahinek/meeting-quality-skills
     repository: https://github.com/ahinek/meeting-quality-skills
     skills:
       - name: meeting-async-update-check
         description: Check a shared update doc and identify attendees missing async updates before a status meeting
+        user-invocable: true
+      - name: meeting-risk-agenda
+        description: Analyze pre-meeting updates and generate a risk-focused agenda by identifying blocked and at-risk items
         user-invocable: true
     harnesses:
       claude-code:
